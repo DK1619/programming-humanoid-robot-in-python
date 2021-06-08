@@ -9,6 +9,7 @@
 import weakref
 import xmlrpclib
 import numpy
+from threading import Thread
 
 class PostHandler(object):
     '''the post hander wraps function to be excuted in paralle
@@ -19,10 +20,13 @@ class PostHandler(object):
     def execute_keyframes(self, keyframes):
         '''non-blocking call of ClientAgent.execute_keyframes'''
         # YOUR CODE HERE
-
+        process = Thread(target=self.proxy.execute_keyframes, args=[keyframes])
+        process.start()
     def set_transform(self, effector_name, transform):
         '''non-blocking call of ClientAgent.set_transform'''
         # YOUR CODE HERE
+        process = Thread(target=self.proxy.set_transform, args=[effector_name, transform])
+        process.start()
 
 
 class ClientAgent(object):
